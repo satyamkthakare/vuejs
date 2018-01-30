@@ -1,12 +1,11 @@
 <template>
   <div>
     <!-- Search conponant -->
-    <h2>{{search}}</h2>
     <div class="field is-grouped">
       <div class="control is-expanded">
         <div class="field  has-addons">
           <div class="control is-expanded has-icons-left">
-            <input class="input is-medium" v-model="search" type="text" placeholder="Job Title, Keywords">
+            <input class="input is-medium" v-model="query" type="text" placeholder="Job Title, Keywords">
             <span class="icon is-small is-left">
               <i class="fa fa-search"></i>
             </span>
@@ -38,8 +37,11 @@ export default {
   name: 'App',
   data() {
       return {
-      search: ''
+      query: ''
     }
+  },
+  methods:{
+    
   }
 }
 </script>

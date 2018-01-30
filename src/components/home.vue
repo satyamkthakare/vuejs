@@ -1,17 +1,16 @@
 <template>
   <div class="section">
-    <search-componant></search-componant>
     <jobs-list></jobs-list>
   </div>
 </template>
 
 <script>
-import searchComponant from './search.vue'
+//import searchComponant from './search.vue'
 import jobsList from './jobs-list.vue'
 export default {
   name: 'App',
   components: {
-    'search-componant': searchComponant,
+    //'search-componant': searchComponant,
     'jobs-list': jobsList
   }
 }
