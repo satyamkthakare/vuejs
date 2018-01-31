@@ -29,45 +29,45 @@
     </div>
     <!-- Search end -->
 
-      <div class="jobs-list-container">
-        <div class="jobs-item" v-for="job in searchFilter" v-bind:key="job.jobType">
-          <div class="card ta-jobs-box">
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <p class="title is-6">{{job.jobCompany}}</p>
-                  <p class="subtitle is-6">
-                    <small>{{job.jobType}}</small>,
-                    <small>{{job.jobLocation}}</small>
-                  </p>
-                </div>
-                <div class="media-right">
-                  <figure class="image is-48x48">
-                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                  </figure>
-                </div>
+    <div class="tile is-ancestor jobs-list-container">
+      <div class="tile is-parent jobs-item" v-for="job in searchFilter">
+        <div class="card ta-jobs-box">
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-6">{{job.jobCompany}}</p>
+                <p class="subtitle is-6">
+                  <small>{{job.jobType}}</small>,
+                  <small>{{job.jobLocation}}</small>
+                </p>
               </div>
-              <div class="content">
-                <router-link to="/job-details" exact>
-                  <h2>{{job.jobTitle}}</h2>
-                </router-link>
-                <p>{{job.jobIndusty}}</p>
+              <div class="media-right">
+                <figure class="image is-48x48">
+                  <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                </figure>
               </div>
+            </div>
+            <div class="content">
+              <router-link to="/job-details" exact>
+                <h2>{{job.jobTitle}}</h2>
+              </router-link>
+              <p>{{job.jobIndusty}}</p>
+            </div>
 
-              <div class="media">
-                <div class="media-content">
-                  <p>{{job.postedDate}}</p>
-                </div>
-                <div class="media-right">
-                  <span class="icon">
-                    <i class="fa fa-heart"></i>
-                  </span>
-                </div>
+            <div class="media">
+              <div class="media-content">
+                <p>{{job.postedDate}}</p>
+              </div>
+              <div class="media-right">
+                <span class="icon">
+                  <i class="fa fa-heart"></i>
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
     <button class="button is-info" v-show="hasMoreItemsToShow()" v-on:click="showMoreItems()">Show More</button>
   </div>
 </template>
@@ -130,9 +130,9 @@ export default {
   @import "../scss/main";
   .jobs-list-container {
       display: flex;
+      flex-grow: inherit;
       flex-wrap: wrap;
       justify-content: space-between;
-      margin: auto;
 
       &:after {
         content: "";
@@ -141,12 +141,18 @@ export default {
     }
     .jobs-item {
         width: 25%;
-        padding: 0.5em;
-        box-sizing: border-box;
-        align-self: stretch;
-
+        flex-basis: auto;
+        // padding: 0.5em;
+        // box-sizing: border-box;
+        // align-self: stretch;
+        .card-content{
+            padding: 1rem;
+        }
         img {
           width: 100%;
+          position: absolute;
+          right: -1rem;
+          top: -1rem;
         }
     }
   .ta-jobs-box{
