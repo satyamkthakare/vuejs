@@ -51,7 +51,7 @@
               <router-link to="/job-details" exact>
                 <h2>{{job.jobTitle}}</h2>
               </router-link>
-              <p>{{job.jobIndusty}}</p>
+              <p><span class="btm-brdr">{{job.jobIndusty}}</span></p>
             </div>
 
             <div class="media">
@@ -147,6 +147,10 @@ export default {
         // align-self: stretch;
         .card-content{
             padding: 1rem;
+            .btm-brdr{
+              border-bottom: 2px solid #a7a4a4;
+              display: inline-block;
+            }
         }
         img {
           width: 100%;
