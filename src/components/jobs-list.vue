@@ -30,7 +30,7 @@
     <!-- Search end -->
 
       <div class="jobs-list-container">
-        <div class="jobs-item" v-for="job in searchFilter | paginationLimit">
+        <div class="jobs-item" v-for="job in searchFilter" v-bind:key="job.jobType">
           <div class="card ta-jobs-box">
             <div class="card-content">
               <div class="media">
@@ -99,7 +99,8 @@ export default {
       });
     },
     paginationLimit :function(data) {
-         return this.pageSize * this.pagesShown;
+        return this.pageSize * this.pagesShown;
+         //return this.jobsList.slice((this.pageSize) * this.pagesShown, this.pageSize * this.pagesShown);
     }
   },
   methods:{
@@ -113,12 +114,6 @@ export default {
     showMoreItems : function() {
         this.pagesShown = this.pagesShown + 1;
         console.log(this.pagesShown);
-    },
-    movePages: function(amount) {
-      var newStartRow = this.startRow + (amount * this.rowsPerPage);
-      if (newStartRow >= 0 && newStartRow < gridData.length) {
-        this.startRow = newStartRow;
-      }
     }
   },
   filters:{
@@ -148,6 +143,7 @@ export default {
         width: 25%;
         padding: 0.5em;
         box-sizing: border-box;
+        align-self: stretch;
 
         img {
           width: 100%;
