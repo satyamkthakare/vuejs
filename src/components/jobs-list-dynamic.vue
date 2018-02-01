@@ -1,14 +1,11 @@
 <template>
-  <div class="app-container section">
-    <!-- <h1 class="title">Job details</h1>
-    <product-list-one></product-list-one>
-    <product-list-two></product-list-two> -->
+  <div>
     <!-- Search conponant -->
     <div class="field is-grouped">
       <div class="control is-expanded">
         <div class="field  has-addons">
           <div class="control is-expanded has-icons-left">
-            <input class="input is-medium" v-model="search" required type="text" placeholder="Job Title, Keywords">
+            <input class="input is-medium" v-model="query" type="text" placeholder="Job Title, Keywords">
             <span class="icon is-small is-left">
               <i class="fa fa-search"></i>
             </span>
@@ -22,7 +19,7 @@
         </div>
       </div>
       <p class="control">
-        <a class="button is-success is-medium" v-on:click="loadUsers">
+        <a class="button is-success is-medium">
           <span class="icon">
             <i class="fa fa-search"></i>
           </span>
@@ -33,15 +30,15 @@
     <!-- Search end -->
 
     <div class="tile is-ancestor jobs-list-container">
-      <div class="tile is-parent jobs-item" v-for="job in blogs">
+      <div class="tile is-parent jobs-item" v-for="job in searchFilter">
         <div class="card ta-jobs-box">
           <div class="card-content">
             <div class="media">
               <div class="media-content">
-                <p class="title is-6">{{job.userId}}</p>
+                <p class="title is-6">{{job.jobCompany}}</p>
                 <p class="subtitle is-6">
-                  <small>{{job.title | to-uppercase}}</small>,
-                  <small>{{job.id}}</small>
+                  <small>{{job.jobType}}</small>,
+                  <small>{{job.jobLocation}}</small>
                 </p>
               </div>
               <div class="media-right">
@@ -51,8 +48,8 @@
               </div>
             </div>
             <div class="content">
-              <router-link v-bind:to="'/details/' + job.id">
-                <h2>{{job.body | snippet}}</h2>
+              <router-link to="/job-details" exact>
+                <h2>{{job.jobTitle}}</h2>
               </router-link>
               <p><span class="btm-brdr">{{job.jobIndusty}}</span></p>
             </div>
@@ -71,68 +68,67 @@
         </div>
       </div>
     </div>
-    <!-- <button class="button is-info" v-show="hasMoreItemsToShow()" v-on:click="showMoreItems()">Show More</button> -->
+    <button class="button is-info" v-show="hasMoreItemsToShow()" v-on:click="showMoreItems()">Show More</button>
   </div>
 </template>
 
 <script>
-//import ProductListOne from './ProductListOne.vue'
-//import ProductListTwo from './ProductListTwo.vue'
-
+//import searchComponant from './search.vue'
 export default {
-    name: 'app',
-    components: {
-        //'product-list-one': ProductListOne,
-        //'product-list-two': ProductListTwo
-    },
-    data(){
+  name: 'App',
+  data() {
       return {
-        search: '',
+        // search: '',
+        query: '',
+        jobsPerRow : 4,
+        pagesShown : 1,
+    		pageSize : 4,
         blogs: []
-        //id: this.$route.params.id
-      }
-    },
-    created(){
-    	this.$http.get('https://jsonplaceholder.typicode.com/posts').then( function(data){
-            //console.log(data.body.length);
-            this.blogs = data.body.slice(0,10);
-        });
-    },
-    methods: {
-    loadUsers: function() {
-    this.$http.get('https://jsonplaceholder.typicode.com/posts').then( function(data){
-        var blogsArray = [];
-            for (let key = 0; key < data.body.length; key++){
-                //data.body[key].title = key;
-                var titleSearch = data.body[key].title.toLowerCase().includes(this.search.toLowerCase());
-                var bodySearch = data.body[key].body.toLowerCase().includes(this.search.toLowerCase());
-                //blogsArray.push(data[key]);
-                if(titleSearch == true || bodySearch == true){
-                	blogsArray.push(data.body[key]);
-                }
-                console.log(data.body[key].title + 'Search '+ titleSearch);
-                console.log(data.body[key].body + 'Search '+ bodySearch);
-            }
-            this.blogs = blogsArray;
-
-      });
-    },
-
-        filteredBlogs: function(){
-            return this.blogs.filter((blog) => {
-                return blog.title.toLowerCase().includes(this.search.toLowerCase());
-            });
-        }
+    }
+  },
+  created(){
 
   },
   computed:{
-    jobslist: function(){
+    rowCount:function(){
+      return Math.ceil(this.jobsList.length / this.jobsPerRow);
+    },
+    jobsList: function(){
       return this.$store.state.jobs;
+    },
+    searchFilter: function(){
+      return this.jobsList.filter(post => {
+        return post.jobTitle.toLowerCase().includes(this.query.toLowerCase());
+      });
+    },
+    paginationLimit :function(data) {
+        return this.pageSize * this.pagesShown;
+         //return this.jobsList.slice((this.pageSize) * this.pagesShown, this.pageSize * this.pagesShown);
     }
+  },
+  methods:{
+    itemCountInRow : function(index){
+      return this.jobsList.slice((index - 1) * this.jobsPerRow, index * this.jobsPerRow);
+    },
+
+    hasMoreItemsToShow : function() {
+        return this.pagesShown < (this.jobsList.length / this.pageSize);
+    },
+    showMoreItems : function() {
+        this.pagesShown = this.pagesShown + 1;
+        console.log(this.pagesShown);
+    }
+  },
+  filters:{
+    //  paginationLimit :function(data) {
+    //     return this.pageSize * this.pagesShown;
+    // }
   }
+
 }
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
   @import "../scss/main";
   .jobs-list-container {

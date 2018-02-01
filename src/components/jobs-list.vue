@@ -82,10 +82,13 @@ export default {
         query: '',
         jobsPerRow : 4,
         pagesShown : 1,
-    		pageSize : 4
+    		pageSize : 4,
+        blogs: []
     }
   },
-
+  created(){
+    
+  },
   computed:{
     rowCount:function(){
       return Math.ceil(this.jobsList.length / this.jobsPerRow);
@@ -142,9 +145,8 @@ export default {
     .jobs-item {
         width: 25%;
         flex-basis: auto;
-        // padding: 0.5em;
-        // box-sizing: border-box;
-        // align-self: stretch;
+        flex-grow: unset;
+
         .card-content{
             padding: 1rem;
             .btm-brdr{

@@ -1,9 +1,12 @@
 <template>
   <div class="app-container">
     <navbar></navbar>
-    <div class="container">
-      <router-view/>
-    </div>
+    <section class="section">
+      <div class="container">
+        <router-view/>
+      </div>
+    </section>
+
   </div>
 </template>
 
@@ -24,5 +27,5 @@ export default {
 
 <style lang="scss" scoped>
   @import '../src/scss/main';
-  
+
 </style>

@@ -14,6 +14,14 @@ Vue.use(mapboxgl)
 
 //Vue.component('navbar', Navbar)
 //require('../node_modules/bootstrap/less/bootstrap.less');
+//Global filter
+Vue.filter('to-uppercase', function(value){
+  return value.toUpperCase();
+});
+
+Vue.filter('snippet', function(value){
+  return value.slice(0,50) + '...';
+});
 
 Vue.config.productionTip = false
 
