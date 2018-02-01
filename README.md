@@ -1,8 +1,6 @@
-# y
+# VUE JS Application 
 
-> y
-
-## Build Setup
+> Vue js# Build Setup
 
 ``` bash
 # install dependencies
